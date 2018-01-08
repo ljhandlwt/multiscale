@@ -398,42 +398,6 @@ class Trainer(object):
         sum_loss = 0.0
         sum_acc = 0.0
 
-        # train
-        # for i in range(last_step+1, FLAGS.max_number_of_steps):
-        #     # summary and save model
-        #     timeout = time.time() - last_save_time > FLAGS.save_model_summary_secs
-        #     if timeout:
-        #         last_save_time = time.time()
-
-        #     # batch
-        #     batch = self.sess.run([self.images, self.labels])
-        #     # feed
-        #     feed = {
-        #         self.network.image:batch[0],
-        #         self.network.label:batch[1]
-        #     }
-        #     # calc_obj
-        #     calc_obj = [self.train_op, self.network.loss, self.network.sub_models[0].acc]
-        #     if timeout:
-        #         calc_obj.append(self.summary_op)
-
-        #     # run
-        #     calc_ans = self.sess.run(calc_obj, feed_dict=feed)
-
-        #     # loss-acc
-        #     sum_loss += calc_ans[1]
-        #     sum_acc += calc_ans[2]
-        #     # print info
-        #     if i % FLAGS.log_every_n_steps == 0:
-        #         avg_loss = sum_loss / (i+1)
-        #         avg_acc = sum_acc / ((i+1)*FLAGS.batch_size)
-        #         print("[%d]loss:%.5f acc:%.5f"%(i,avg_loss,avg_acc))
-        #     # save model and summary
-        #     if timeout:
-        #         save_path = os.path.join(FLAGS.checkpoint_dir,'model.ckpt')
-        #         self.saver.save(self.sess, save_path, global_step=i)
-        #         self.summary_writer.add_summary(calc_ans[3], global_step=i)
-
         img_features = []
         img_label = []
         img_cam = []
