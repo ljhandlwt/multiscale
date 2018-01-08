@@ -2,14 +2,14 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/checkpoints/inception_v3
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/checkpoints/inception_v3_299
 # Where the dataset is saved to.
 DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 # WHere the log is saved to
 LOG_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/log
 # Wher the tfrecord file is save to
 OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_train
-python train_image_classifier2.py \
+python train_inceptionV3_299.py \
 --learning_rate=2e-4 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
