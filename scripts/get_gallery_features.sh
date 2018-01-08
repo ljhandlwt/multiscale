@@ -9,7 +9,7 @@ DATASET_DIR=/home/yuanziyi/Market-1501
 LOG_DIR=/home/yuanziyi/log
 # Wher the tfrecord file is save to
 OUTPUT_DIR=/home/yuanziyi/Market-1501-tfrecord/bounding_box_test
-python get_gallery_features.py \
+python ../get_feature/get_gallery_features.py \
 --learning_rate=2e-3 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
