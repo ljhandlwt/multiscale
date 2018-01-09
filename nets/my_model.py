@@ -133,6 +133,7 @@ class SubIncption(BaseModel):
 
         self.logits = logits
         self.pred = end_points['Predictions']
+        self.feature = end_points['AvgPool_1a']
         self.end_points = end_points
 
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.logits,1))
