@@ -363,16 +363,6 @@ class Trainer(object):
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
 
-        #bn_op_branch_0 = [bn for bn in bn_op if bn.name.startswith('inception_v3/branch_0')]
-        #variables_branch_0 = [var for var in variables if var.name.startswith('inception_v3/branch_0')]
-        #grad_branch_0 = tf.gradients(self.network.loss_branch_0, variables_branch_0)
-        #self.train_op_branch_0 = self.train_op = [self.optimizer.apply_gradients(zip(grad_branch_0,variables_branch_0))] + bn_op_branch_0
-
-        #bn_op_branch_1 = [bn for bn in bn_op if bn.name.startswith('inception_v3/branch_1')]
-        #variables_branch_1 = [var for var in variables if var.name.startswith('inception_v3/branch_1')]
-        #grad_branch_1 = tf.gradients(self.network.loss_branch_1, variables_branch_1)
-        #self.train_op_branch_1 = self.train_op = [self.optimizer.apply_gradients(zip(grad_branch_1,variables_branch_1))] + bn_op_branch_1
-    
     def train(self):
         # sess
         sess_config = tf.ConfigProto()
@@ -403,18 +393,10 @@ class Trainer(object):
         self.coord = coord
         self.threads = threads
 
-        # pdb.set_trace()
-
         # init vars
         st_time = time.time()
         last_save_time = st_time
 
-        #sum_joint_loss = 0.0
-        #sum_joint_acc = 0.0
-        #sum_loss_branch_0 = 0.0
-        #sum_loss_branch_1 =0.0
-        #sum_acc_branch_0 = 0.0
-        #sum_acc_branch_1 = 0.0
         acc_branch_0 = que()
         loss_branch_0 = que()
 
@@ -427,7 +409,7 @@ class Trainer(object):
 
             # batch
             batch = self.sess.run([self.images, self.labels])
-            # pdb.set_trace()
+
             # feed
             feed = {
                 self.network.image:batch[0],
@@ -438,36 +420,16 @@ class Trainer(object):
             	self.network.sub_models[0].loss, self.network.sub_models[0].acc]
             if timeout:
                 calc_obj.append(self.summary_op)
-            #calc_obj_branch_0 = [self.train_op_branch_0]
-            #calc_obj_branch_1 = [self.train_op_branch_1]
 
             # run
             calc_ans = self.sess.run(calc_obj, feed_dict=feed)
-            #self.sess.run(calc_obj_branch_0, feed_dict=feed)
-            #self.sess.run(calc_obj_branch_1, feed_dict=feed)
 
-            # loss-acc
-            #sum_joint_loss += calc_ans[1]
-            #sum_joint_acc += calc_ans[2]
-            #sum_loss_branch_0 += calc_ans[1]
-            #sum_loss_branch_1 += calc_ans[4]
-            #sum_acc_branch_0 += calc_ans[2]
-            #sum_acc_branch_1 += calc_ans[6]
             acc_branch_0.append(calc_ans[2])
             loss_branch_0.append(calc_ans[1])
 
             # print info
             if i % FLAGS.log_every_n_steps == 0:
-                #pdb.set_trace()
-                #avg_joint_loss = sum_joint_loss / ((i - last_step))
-                #avg_joint_acc = sum_joint_acc / ((i - last_step)*FLAGS.batch_size)
-                #avg_loss_branch_0 = sum_loss_branch_0 / ((i - last_step))
-                #avg_loss_branch_1 = sum_loss_branch_1 / ((i - last_step))
-                #avg_acc_branch_0 = sum_acc_branch_0 / ((i - last_step)*FLAGS.batch_size)
-                #avg_acc_branch_1 = sum_acc_branch_1 / ((i - last_step)*FLAGS.batch_size)
-                #print("[%d] joint_loss: %.5f joint_acc: %.5f"%(i, avg_joint_loss, avg_joint_acc))
                 print("[%d] loss_branch_0: %.5f acc_branch_0: %.5f"%(i, loss_branch_0.avg(), acc_branch_0.avg()/FLAGS.batch_size))
-                #print("[%d] loss_branch_1: %.5f acc_branch_1: %.5f"%(i, avg_loss_branch_1, avg_acc_branch_1))
             	print("-------------------------------------------------------------------------")
 
             # save model and summary
