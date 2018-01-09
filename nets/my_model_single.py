@@ -52,6 +52,8 @@ class MyInception(BaseModel):
             joint_scope = 'joint'
 
             with tf.variable_scope(joint_scope):
+                self.feature = tf.concat([self.sub_models[0].end_points['AvgPool_1a'],
+                    self.sub_models[1].end_points['AvgPool_1a']], axis=-1)
                 x = tf.concat([model.logits for model in self.sub_models], axis=-1)
                 x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
                 self.joint_logits = x
