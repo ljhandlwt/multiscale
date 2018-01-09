@@ -29,7 +29,7 @@ def load_test_data(LG_path, FG_path, LP_path, FP_path, CAMG_path, CAMP_path):
     PF = loadfeature_mat(FP_path)
     GCAM = loadfeature_mat(CAMG_path)[0]
     PCAM = loadfeature_mat(CAMP_path)[0]
-    #pdb.set_trace()
+    pdb.set_trace()
 
     D = pairwise_distances(GF, PF, metric='euclidean', n_jobs=1)
     D = np.transpose(D)

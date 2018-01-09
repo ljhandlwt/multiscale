@@ -390,8 +390,6 @@ class Trainer(object):
         self.coord = coord
         self.threads = threads
 
-        # pdb.set_trace()
-
         # init vars
         st_time = time.time()
         last_save_time = st_time
@@ -412,7 +410,7 @@ class Trainer(object):
 
             # batch
             batch = self.sess.run([self.images, self.labels])
-            # pdb.set_trace()
+
             # feed
             feed = {
                 self.network.image:batch[0],
