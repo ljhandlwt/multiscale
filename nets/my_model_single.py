@@ -39,14 +39,10 @@ class MyInception(BaseModel):
 
     def init_network(self):
         self.sub_models = []
-        # feature = []
         for i,s in enumerate(self.sizes):
             sub_model = SubIncption([self.image,self.label],
                 self.num_classes, s, 'branch_{}'.format(i), is_training=self.is_training)
             self.sub_models.append(sub_model)
-            # feature.append(sub_model.end_points['Mixed_7c'])
-        # pdb.set_trace()
-        # self.feature = tf.concat(feature, axis=-1)
 
         if len(self.sizes) > 1:
             joint_scope = 'joint'
@@ -80,6 +76,7 @@ class MyInception(BaseModel):
         else:
             self.logits = self.sub_models[0].logits
             self.end_points = self.sub_models[0].end_points
+            self.feature = self.sub_models[0].end_points['AvgPool_1a']
 
     def init_loss(self):
         cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
@@ -95,10 +92,6 @@ class MyInception(BaseModel):
         regularizers = tf.add_n(regular_vars)
 
         self.loss = cross_entropy + FLAGS.weight_decay * regularizers
-        #cross_entropy_branch_0 = -tf.reduce_sum(self.joint_pred*tf.log(self.sub_models[0].pred+FLAGS.opt_epsilon), axis=1)
-        #self.loss_branch_0 = tf.reduce_mean(cross_entropy)
-        #cross_entropy_branch_1 = -tf.reduce_sum(self.joint_pred*tf.log(self.sub_models[1].pred+FLAGS.opt_epsilon), axis=1)
-        #self.loss_branch_1 = tf.reduce_mean(cross_entropy)
 
         tf.summary.scalar('losses/%s_cross_entropy' % self.scope, cross_entropy)
         tf.summary.scalar('losses/%s_regularizers' % self.scope, regularizers)
