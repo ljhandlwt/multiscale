@@ -267,7 +267,20 @@ def _configure_optimizer(learning_rate):
     raise ValueError('Optimizer [%s] was not recognized', FLAGS.optimizer)
   return optimizer
 
+class que(object):
+    def __init__(self, max_size=1000):
+        self.arr = []
+        self.max_size = max_size
+   
+    def append(self, num):
+        self.arr.append(num)
+        if len(self.arr) > self.max_size :
+            self.arr.pop(0)
 
+    def avg(self):
+        if not len(self.arr):
+            return 0
+        return sum(self.arr)/len(self.arr)
 
 class Trainer(object):
     def __init__(self):
@@ -397,12 +410,12 @@ class Trainer(object):
         st_time = time.time()
         last_save_time = st_time
 
-        sum_joint_loss = 0.0
-        sum_joint_acc = 0.0
-        sum_loss_branch_0 = 0.0
-        sum_loss_branch_1 =0.0
-        sum_acc_branch_0 = 0.0
-        sum_acc_branch_1 = 0.0
+        sum_joint_loss = que()
+        sum_joint_acc = que()
+        sum_loss_branch_0 = que()
+        sum_loss_branch_1 =que()
+        sum_acc_branch_0 = que()
+        sum_acc_branch_1 = que()
 
         # train
         for i in range(last_step+1, FLAGS.max_number_of_steps):
@@ -434,20 +447,20 @@ class Trainer(object):
             self.sess.run(calc_obj_branch_1, feed_dict=feed)
 
             # loss-acc
-            sum_joint_loss += calc_ans[1]
-            sum_joint_acc += calc_ans[2]
-            sum_loss_branch_0 += calc_ans[3]
-            sum_loss_branch_1 += calc_ans[4]
-            sum_acc_branch_0 += calc_ans[5]
-            sum_acc_branch_1 += calc_ans[6]
+            sum_joint_loss.append(calc_ans[1])
+            sum_joint_acc.append(calc_ans[2])
+            sum_loss_branch_0.append(calc_ans[3])
+            sum_loss_branch_1.append(calc_ans[4])
+            sum_acc_branch_0.append(calc_ans[5])
+            sum_acc_branch_1.append(calc_ans[6])
             # print info
             if i % FLAGS.log_every_n_steps == 0:
-                avg_joint_loss = sum_joint_loss / ((i - last_step))
-                avg_joint_acc = sum_joint_acc / ((i - last_step)*FLAGS.batch_size)
-                avg_loss_branch_0 = sum_loss_branch_0 / ((i - last_step))
-                avg_loss_branch_1 = sum_loss_branch_1 / ((i - last_step))
-                avg_acc_branch_0 = sum_acc_branch_0 / ((i - last_step)*FLAGS.batch_size)
-                avg_acc_branch_1 = sum_acc_branch_1 / ((i - last_step)*FLAGS.batch_size)
+                avg_joint_loss = sum_joint_loss.avg()
+                avg_joint_acc = sum_joint_acc.avg() / FLAGS.batch_size
+                avg_loss_branch_0 = sum_loss_branch_0.avg()
+                avg_loss_branch_1 = sum_loss_branch_1.avg()
+                avg_acc_branch_0 = sum_acc_branch_0.avg() / FLAGS.batch_size
+                avg_acc_branch_1 = sum_acc_branch_1.avg() / FLAGS.batch_size
                 print("[%d] joint_loss: %.5f joint_acc: %.5f"%(i, avg_joint_loss, avg_joint_acc))
                 print("[%d] loss_branch_0: %.5f acc_branch_0: %.5f"%(i, avg_loss_branch_0, avg_acc_branch_0))
                 print("[%d] loss_branch_1: %.5f acc_branch_1: %.5f"%(i, avg_loss_branch_1, avg_acc_branch_1))
