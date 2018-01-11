@@ -61,4 +61,4 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num = 27950
+--ckpt_num = 36742
