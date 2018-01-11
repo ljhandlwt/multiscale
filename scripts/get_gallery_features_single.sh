@@ -2,7 +2,7 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/home/yuanziyi/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/checkpoints/inception_v3_299
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/inception_v3_299
 # Where the dataset is saved to.
 DATASET_DIR=/home/yuanziyi/Market-1501
 # WHere the log is saved to
