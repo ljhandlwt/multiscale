@@ -11,7 +11,6 @@ import numpy as np
 from scipy import io
 
 from deployment import model_deploy
-from preprocessing import preprocessing_factory
 
 from nets import my_model
 
@@ -289,11 +288,6 @@ class Trainer(object):
             global_step = slim.create_global_step()
             self.global_step = global_step
 
-        preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
-        image_preprocessing_fn = preprocessing_factory.get_preprocessing(
-            preprocessing_name,
-            is_training=False)
-
         tfrecord_list = os.listdir(FLAGS.dataset_dir)
         tfrecord_list = [os.path.join(FLAGS.dataset_dir, name) for name in tfrecord_list if name.endswith('tfrecords')]
         file_queue = tf.train.string_input_producer(tfrecord_list, num_epochs=1)
@@ -313,7 +307,8 @@ class Trainer(object):
         img_height = tf.cast(features['img_height'], tf.int32)
         img_width = tf.cast(features['img_width'], tf.int32)
         img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
-        img = image_preprocessing_fn(img, FLAGS.origin_height, FLAGS.origin_width)
+        img = tf.image.convert_image_dtype(img, dtype=tf.float32)
+        img = tf.image.random_flip_left_right(img)
 
         label = features['label']
         cam = features['cam']
