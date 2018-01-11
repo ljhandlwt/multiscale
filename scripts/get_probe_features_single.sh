@@ -23,4 +23,5 @@ python get_probe_features_single.py \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=6 \
 --log_every_n_steps=5 \
+--optimizer=sgd \
 --weight_decay=0.00004
