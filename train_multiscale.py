@@ -309,8 +309,8 @@ class Trainer(object):
         img_height = tf.cast(features['img_height'], tf.int32)
         img_width = tf.cast(features['img_width'], tf.int32)
         img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
-        img = image_preprocessing_fn(img, 299, 299)
-        img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
+        img = image_preprocessing_fn(img, FLAGS.origin_height, FLAGS.origin_width)
+        # img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
 
         label = features['label']
         images, labels = tf.train.shuffle_batch([img, label],

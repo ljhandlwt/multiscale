@@ -212,17 +212,16 @@ def preprocess_for_train(image, height, width, bbox,
     # fashion based on the thread number.
     # Note that ResizeMethod contains 4 enumerated resizing methods.
 
-    # jh:delete
     # We select only 1 case for fast_mode bilinear.
     # num_resize_cases = 1 if fast_mode else 4
-    # distorted_image = apply_with_random_selector(
-    #     distorted_image,
-    #     lambda x, method: tf.image.resize_images(x, [height, width], method),
-    #     num_cases=num_resize_cases)
+    distorted_image = apply_with_random_selector(
+        distorted_image,
+        lambda x, method: tf.image.resize_images(x, [height, width], method),
+        num_cases=num_resize_cases)
 
-    # if add_image_summaries:
-    #   tf.summary.image('cropped_resized_image',
-    #                    tf.expand_dims(distorted_image, 0))
+    if add_image_summaries:
+      tf.summary.image('cropped_resized_image',
+                       tf.expand_dims(distorted_image, 0))
 
     # Randomly flip the image horizontally.
     distorted_image = tf.image.random_flip_left_right(distorted_image)
