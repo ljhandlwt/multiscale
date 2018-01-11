@@ -23,7 +23,4 @@ python get_gallery_features_single.py \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=6 \
 --log_every_n_steps=5 \
---optimizer=adam \
---adam_beta1=0.5 \
---adam_beta2=0.999 \
 --weight_decay=0.00004
