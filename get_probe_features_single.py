@@ -159,6 +159,9 @@ tf.app.flags.DEFINE_integer('origin_channel', 3, 'origin channel of image')
 
 tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
+tf.app.flags.DEFINE_integer(
+    'ckpt_num', None, 'The number of ckpt model.')
+
 #####################
 # Dir Flags #
 #####################
@@ -435,10 +438,12 @@ class Trainer(object):
         # io.savemat('test_gallery_features.mat', {'test_gallery_features': img_features})
         # io.savemat('test_gallery_labels.mat', {'test_gallery_labels': img_label})
         # io.savemat('testCAM.mat', {'testCAM': img_cam})
-
-        io.savemat('test_probe_features.mat', {'test_probe_features': img_features})
-        io.savemat('test_probe_labels.mat', {'test_probe_labels': img_label})
-        io.savemat('queryCAM.mat', {'queryCAM': img_cam})
+        file_path = str(FLAGS.ckpt_num)
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
+        io.savemat(file_path + '/test_probe_features.mat', {'test_probe_features': img_features})
+        io.savemat(file_path + '/test_probe_labels.mat', {'test_probe_labels': img_label})
+        io.savemat(file_path + '/queryCAM.mat', {'queryCAM': img_cam})
 
 
         # end
@@ -454,9 +459,9 @@ class Trainer(object):
             filenames = os.listdir(FLAGS.checkpoint_dir)
             filenames = [name for name in filenames if name.endswith('index')]
             if len(filenames) > 0:
-                pattern = r'model\.ckpt\-(\d+)\.index'
-                nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
-                max_num = max(nums)
+                # pattern = r'model\.ckpt\-(\d+)\.index'
+                # nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
+                max_num = FLAGS.ckpt_num
 
                 self.saver.restore(self.sess, os.path.join(FLAGS.checkpoint_dir, 'model.ckpt-{}'.format(max_num)))
                 print("[JH]use checkpoint-{} weights".format(max_num))
