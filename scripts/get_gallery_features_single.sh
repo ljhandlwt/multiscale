@@ -8,7 +8,7 @@ DATASET_DIR=/home/yuanziyi/Market-1501
 # WHere the log is saved to
 LOG_DIR=/home/yuanziyi/log
 # Wher the tfrecord file is save to
-OUTPUT_DIR=world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_test
+OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_test
 python get_gallery_features_single.py \
 --learning_rate=2e-3 \
 --learning_rate_decay_type=fixed \
