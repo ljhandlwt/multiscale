@@ -168,6 +168,9 @@ class SubIncption(BaseModel):
             name = var.name.replace(scope, '').replace(':0', '')
             if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
                 continue
+            if name.find('gamma') != -1:
+                print(name)
+                continue
             d[name] = var
 
         saver = tf.train.Saver(d)
