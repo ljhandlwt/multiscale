@@ -308,7 +308,6 @@ class Trainer(object):
         img_width = tf.cast(features['img_width'], tf.int32)
         img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
         img = tf.image.convert_image_dtype(img, dtype=tf.float32)
-        img = tf.image.random_flip_left_right(img)
 
         label = features['label']
         cam = features['cam']

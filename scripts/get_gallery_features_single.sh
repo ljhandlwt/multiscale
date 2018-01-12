@@ -2,7 +2,7 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/home/yuanziyi/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/inception_v3_299
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ziyi/inception_v3_299
 # Where the dataset is saved to.
 DATASET_DIR=/home/yuanziyi/Market-1501
 # WHere the log is saved to
@@ -25,7 +25,7 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=25602
+--ckpt_num=26643
 
 python get_gallery_features_single.py \
 --learning_rate=2e-3 \
@@ -43,7 +43,7 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=13869
+--ckpt_num=33634
 
 python get_gallery_features_single.py \
 --learning_rate=2e-3 \
@@ -61,4 +61,4 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=36742
+--ckpt_num=39286

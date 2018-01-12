@@ -2,7 +2,7 @@
 # Where the pre-trained InceptionV3 checkpoint is saved to.
 PRETRAINED_CHECKPOINT_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ziyi
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ziyi/inception_v3_299
+TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ziyi2/inception_v3_299
 # Where the dataset is saved to.
 DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 # WHere the log is saved to
@@ -16,7 +16,7 @@ python train_inceptionV3_299.py \
 --dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --model_name=inception_v3 \
---batch_size=16 \
+--batch_size=8 \
 --max_number_of_steps=16000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
@@ -33,7 +33,7 @@ python train_inceptionV3_299.py \
 --dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --model_name=inception_v3 \
---batch_size=16 \
+--batch_size=8 \
 --max_number_of_steps=30000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
@@ -50,7 +50,7 @@ python train_inceptionV3_299.py \
 --dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --model_name=inception_v3 \
---batch_size=16 \
+--batch_size=8 \
 --max_number_of_steps=40000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
