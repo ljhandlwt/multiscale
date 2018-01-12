@@ -29,8 +29,9 @@ class MyInception(BaseModel):
 
         with tf.variable_scope(scope):
             self.init_input()
-            with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
-                self.init_network()
+            with slim.arg_scope([slim.batch_norm], scale=True):    
+                with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
+                    self.init_network()
             self.init_loss()
 
     def init_input(self):
