@@ -12,5 +12,3 @@ multiscale inception-v3 reid market-1501
 
 ## 运行test代码的方法：
 - 在产生了所有的6个mat文件后，在multiscale文件夹下运行sh eval.sh
-
-testing
