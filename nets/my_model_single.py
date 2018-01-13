@@ -142,8 +142,11 @@ class SubIncption(BaseModel):
         tf.summary.scalar('acc/%s' % self.acc, self.acc)
 
     def init_loss(self):
-        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.pred+FLAGS.opt_epsilon), axis=1)
-        self.loss = tf.reduce_mean(cross_entropy)
+        # cross_entropy = -tf.reduce_sum(self.label*tf.log(self.pred+FLAGS.opt_epsilon), axis=1)
+        loss = slim.losses.softmax_cross_entropy(self.pred+FLAGS.opt_epsilon, self.label)
+        total_loss = slim.losses.get_total_loss(add_regularization_losses=False)
+        self.loss = tf.reduce_mean(total_loss)
+        print ('win a win and win a win')
 
         tf.summary.scalar('losses/%s' % self.scope, self.loss)
 
