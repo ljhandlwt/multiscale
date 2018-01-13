@@ -27,11 +27,10 @@ class MyInception(BaseModel):
         self.scope = scope
         self.is_training = is_training
 
-        with tf.variable_scope(scope):
+        with tf.variable_scope(scope)
             self.init_input()
-            with slim.arg_scope([slim.batch_norm], scale=True):    
-                with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
-                    self.init_network()
+            with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
+                self.init_network()
             self.init_loss()
 
     def init_input(self):
@@ -172,9 +171,9 @@ class SubIncption(BaseModel):
             name = var.name.replace(scope, '').replace(':0', '')
             if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
                 continue
-            if name.find('gamma') != -1:
-                print(name)
-                continue
+            # if name.find('gamma') != -1:
+            #     print(name)
+            #     continue
             d[name] = var
 
         saver = tf.train.Saver(d)
