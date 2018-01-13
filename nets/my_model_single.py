@@ -27,7 +27,7 @@ class MyInception(BaseModel):
         self.scope = scope
         self.is_training = is_training
 
-        with tf.variable_scope(scope)
+        with tf.variable_scope(scope):
             self.init_input()
             with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
                 self.init_network()
