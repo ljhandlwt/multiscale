@@ -290,6 +290,7 @@ class Trainer(object):
 
             self.train()
 
+
     def init_batch(self):
         deploy_config = model_deploy.DeploymentConfig()
 
@@ -358,6 +359,8 @@ class Trainer(object):
         grad = tf.gradients(self.network.loss, variables)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
+
+        # self.train_tensor = slim.learning.create_train_op(self.network.loss, optimizer)
 
     def train(self):
         # sess
