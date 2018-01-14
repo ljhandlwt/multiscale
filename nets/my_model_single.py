@@ -124,6 +124,7 @@ class SubIncption(BaseModel):
         logits,end_points = inception_v3.inception_v3(x,
             num_classes=self.num_classes,
             is_training=self.is_training,
+            depth_multiplier=1
         )
 
         self.logits = logits
