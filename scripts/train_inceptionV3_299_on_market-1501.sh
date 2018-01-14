@@ -19,8 +19,8 @@ python train_inceptionV3_299.py \
 --batch_size=8 \
 --max_number_of_steps=16000 \
 --checkpoint_dir=${TRAIN_DIR} \
-# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
---pretrain_path=None \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
+# --pretrain_path=None \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=300 \
 --log_every_n_steps=100 \
@@ -37,8 +37,8 @@ python train_inceptionV3_299.py \
 --batch_size=8 \
 --max_number_of_steps=30000 \
 --checkpoint_dir=${TRAIN_DIR} \
-# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
---pretrain_path=None \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
+# --pretrain_path=None \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=300 \
 --log_every_n_steps=100 \
@@ -55,8 +55,8 @@ python train_inceptionV3_299.py \
 --batch_size=8 \
 --max_number_of_steps=100000 \
 --checkpoint_dir=${TRAIN_DIR} \
-# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
---pretrain_path=None \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
+# --pretrain_path=None \
 --log_dir=${LOG_DIR} \
 --save_model_summary_secs=300 \
 --log_every_n_steps=100 \

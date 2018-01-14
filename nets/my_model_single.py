@@ -124,7 +124,6 @@ class SubIncption(BaseModel):
         logits,end_points = inception_v3.inception_v3(x,
             num_classes=self.num_classes,
             is_training=self.is_training,
-            depth_multiplier=0.125
         )
         print ('testing')
 
@@ -173,9 +172,9 @@ class SubIncption(BaseModel):
             name = var.name.replace(scope, '').replace(':0', '')
             if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
                 continue
-            # if name.find('gamma') != -1:
-            #     print(name)
-            #     continue
+            if name.find('StrangeName') != -1:
+                print(name)
+                continue
             d[name] = var
 
         saver = tf.train.Saver(d)
