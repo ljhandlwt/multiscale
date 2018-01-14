@@ -125,7 +125,6 @@ class SubIncption(BaseModel):
             num_classes=self.num_classes,
             is_training=self.is_training,
         )
-        print ('testing')
 
         self.logits = logits
         self.pred = end_points['Predictions']
