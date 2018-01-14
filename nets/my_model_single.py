@@ -126,6 +126,7 @@ class SubIncption(BaseModel):
             is_training=self.is_training,
             depth_multiplier=0.125
         )
+        print ('testing')
 
         self.logits = logits
         self.pred = end_points['Predictions']
