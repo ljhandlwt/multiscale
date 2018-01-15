@@ -167,12 +167,12 @@ class SubIncption(BaseModel):
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope)
 
         d = {}
+        pdb.set_trace()
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
             if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
                 continue
             if name.find('StrangeName') != -1:
-                pdb.set_trace()
                 print(name)
                 continue
             d[name] = var
