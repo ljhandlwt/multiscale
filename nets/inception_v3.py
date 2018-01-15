@@ -529,14 +529,16 @@ def inception_v3(inputs,
                                 scope='AvgPool_1a_{}x{}'.format(*kernel_size))
           end_points['AvgPool_1a'] = net
 
-          net = slim.fully_connected(net, 256, scope='StrangeName')
+          net = slim.conv2d(net, 256, [1, 1], padding='SAME', activation_fn=None,
+                             normalizer_fn=None, scope='StrangeName')
           end_points['AvgPool_1a'] = net
+
         if not num_classes:
           return net, end_points
         # 1 x 1 x 2048
         net = slim.dropout(net, keep_prob=dropout_keep_prob, scope='Dropout_1b')
         end_points['PreLogits'] = net
-        
+
         # 2048
         logits = slim.conv2d(net, num_classes, [1, 1], activation_fn=None,
                              normalizer_fn=None, scope='Conv2d_1c_1x1')
