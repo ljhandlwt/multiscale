@@ -25,7 +25,7 @@ python get_probe_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=23558
+--ckpt_num=25605
 
 python get_probe_features_single.py \
 --learning_rate=2e-3 \
@@ -43,7 +43,7 @@ python get_probe_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=89924
+--ckpt_num=89269
 
 python get_probe_features_single.py \
 --learning_rate=2e-3 \
@@ -61,4 +61,4 @@ python get_probe_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=99298
+--ckpt_num=98674
