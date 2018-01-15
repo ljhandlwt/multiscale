@@ -527,11 +527,14 @@ def inception_v3(inputs,
           kernel_size = _reduced_kernel_size_for_small_input(net, [8, 8])
           net = slim.avg_pool2d(net, kernel_size, padding='VALID',
                                 scope='AvgPool_1a_{}x{}'.format(*kernel_size))
-          end_points['AvgPool_1a'] = net
+          # end_points['AvgPool_1a'] = net
 
           net = slim.conv2d(net, 256, [1, 1], padding='SAME', activation_fn=None,
-                             normalizer_fn=None, scope='StrangeName')
+                             scope='StrangeName')
+
           end_points['AvgPool_1a'] = net
+
+          net = tf.nn.relu(net)
 
         if not num_classes:
           return net, end_points
