@@ -172,6 +172,7 @@ class SubIncption(BaseModel):
             if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
                 continue
             if name.find('StrangeName') != -1:
+                pdb.set_trace()
                 print(name)
                 continue
             d[name] = var
