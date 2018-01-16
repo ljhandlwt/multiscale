@@ -25,7 +25,7 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=17902
+--ckpt_num=54964
 
 python get_gallery_features_single.py \
 --learning_rate=2e-3 \
@@ -43,7 +43,7 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=35607
+--ckpt_num=57181
 
 python get_gallery_features_single.py \
 --learning_rate=2e-3 \
@@ -61,4 +61,4 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=42022
+--ckpt_num=59286
