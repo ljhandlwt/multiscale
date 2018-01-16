@@ -166,8 +166,6 @@ class SubIncption(BaseModel):
         for var in variables:
             name = var.name.replace(scope, '').replace(':0', '')
             if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
-                print ('--------')
-                pdb.set_trace()
                 continue
             d[name] = var
 

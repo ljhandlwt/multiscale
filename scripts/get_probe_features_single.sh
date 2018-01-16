@@ -25,7 +25,8 @@ python get_probe_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=58626
+--ckpt_num=58626 \
+--scale_size=225
 
 # python get_probe_features_single.py \
 # --learning_rate=2e-3 \

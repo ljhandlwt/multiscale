@@ -159,6 +159,8 @@ tf.app.flags.DEFINE_integer('origin_channel', 3, 'origin channel of image')
 
 tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
+tf.app.flags.DEFINE_integer('scale_size', 299, 'size of scale in single model')
+
 tf.app.flags.DEFINE_integer(
     'ckpt_num', None, 'The number of ckpt model.')
 
@@ -334,7 +336,7 @@ class Trainer(object):
         # jh-future:sizes can be add into tf.app.flags
         network = my_model.MyInception(
             FLAGS.num_classes-FLAGS.labels_offset,
-            [299],
+            [FLAGS.scale_size],
             FLAGS.model_name,
             is_training=False
         )
