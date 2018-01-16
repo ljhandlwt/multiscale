@@ -10,7 +10,6 @@ import re
 import sys
 
 from deployment import model_deploy
-from preprocessing import preprocessing_factory
 
 from nets import my_model
 
@@ -172,6 +171,12 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_string(
   'log_dir', None, 'dir of summar')
 
+tf.app.flags.DEFINE_string(
+  'pretrain_branch_0_path', None, 'pretrain ckpt of 299 model')
+
+tf.app.flags.DEFINE_string(
+  'pretrain_branch_1_path', None, 'pretrain ckpt of 225 model')
+
 FLAGS = tf.app.flags.FLAGS
 
 
@@ -299,11 +304,6 @@ class Trainer(object):
             global_step = slim.create_global_step()
             self.global_step = global_step
 
-        preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
-        image_preprocessing_fn = preprocessing_factory.get_preprocessing(
-            preprocessing_name,
-            is_training=True)
-
         tfrecord_list = os.listdir(FLAGS.dataset_dir)
         tfrecord_list = [os.path.join(FLAGS.dataset_dir, name) for name in tfrecord_list if name.endswith('tfrecords')]
         file_queue = tf.train.string_input_producer(tfrecord_list)
@@ -322,8 +322,8 @@ class Trainer(object):
         img_height = tf.cast(features['img_height'], tf.int32)
         img_width = tf.cast(features['img_width'], tf.int32)
         img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
-        img = image_preprocessing_fn(img, FLAGS.origin_height, FLAGS.origin_width)
-        # img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
+        img = tf.image.convert_image_dtype(img, dtype=tf.float32)
+        img = tf.image.random_flip_left_right(img)
 
         label = features['label']
         images, labels = tf.train.shuffle_batch([img, label],
@@ -369,12 +369,12 @@ class Trainer(object):
         bn_op_branch_0 = [bn for bn in bn_op if bn.name.startswith('inception_v3/branch_0')]
         variables_branch_0 = [var for var in variables if var.name.startswith('inception_v3/branch_0')]
         grad_branch_0 = tf.gradients(self.network.loss_branch_0, variables_branch_0)
-        self.train_op_branch_0 = self.train_op = [self.optimizer.apply_gradients(zip(grad_branch_0,variables_branch_0))] + bn_op_branch_0
+        self.train_op_branch_0 = [self.optimizer.apply_gradients(zip(grad_branch_0,variables_branch_0))] + bn_op_branch_0
 
         bn_op_branch_1 = [bn for bn in bn_op if bn.name.startswith('inception_v3/branch_1')]
         variables_branch_1 = [var for var in variables if var.name.startswith('inception_v3/branch_1')]
         grad_branch_1 = tf.gradients(self.network.loss_branch_1, variables_branch_1)
-        self.train_op_branch_1 = self.train_op = [self.optimizer.apply_gradients(zip(grad_branch_1,variables_branch_1))] + bn_op_branch_1
+        self.train_op_branch_1 = [self.optimizer.apply_gradients(zip(grad_branch_1,variables_branch_1))] + bn_op_branch_1
     
     def train(self):
         # sess
@@ -492,8 +492,9 @@ class Trainer(object):
                 print("[JH]use checkpoint-{} weights".format(max_num))
                 return max_num
         if os.path.exists(FLAGS.pretrain_path):
-            self.network.load_pretrain_model(self.sess, FLAGS.pretrain_path)
-            print("[JH]use pretrain init weights")
+            self.network.load_pretrain_model(self.sess, 
+                [FLAGS.pretrain_branch_0_path, FLAGS.pretrain_branch_1_path])
+            print("[ZKC]use pretrain init weights")
             return -1
 
         print("[JH]use random init weights")
