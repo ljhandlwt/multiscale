@@ -80,9 +80,6 @@ class MyInception(BaseModel):
 
     def init_loss(self):
         # cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
-        for model in self.sub_models:
-            cross_entropy = tf.losses.softmax_cross_entropy(self.joint_pred+FLAGS.opt_epsilon, self.label)
-            _ = tf.losses.add_loss(cross_entropy)
 
         # if len(self.sizes) > 1:
         #     joint_cross_entropy = -tf.reduce_sum(self.label*tf.log(self.joint_pred+FLAGS.opt_epsilon), axis=1)
@@ -99,6 +96,8 @@ class MyInception(BaseModel):
         # tf.summary.scalar('losses/%s_cross_entropy' % self.scope, cross_entropy)
         # tf.summary.scalar('losses/%s_regularizers' % self.scope, regularizers)
         # tf.summary.scalar('losses/%s' % self.scope, self.loss)
+        for model in self.sub_models:
+            _ = tf.losses.add_loss(model.loss)
 
     def load_pretrain_model(self, sess, path):
         # make sure self.scope is the root scope
@@ -144,10 +143,12 @@ class SubIncption(BaseModel):
         tf.summary.scalar('acc/%s' % self.acc, self.acc)
 
     def init_loss(self):
-        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.pred+FLAGS.opt_epsilon), axis=1)
-        self.loss = tf.reduce_mean(cross_entropy)
+        # cross_entropy = -tf.reduce_sum(self.label*tf.log(self.pred+FLAGS.opt_epsilon), axis=1)
+        # self.loss = tf.reduce_mean(cross_entropy)
 
-        tf.summary.scalar('losses/%s' % self.scope, self.loss)
+        # tf.summary.scalar('losses/%s' % self.scope, self.loss)
+        cross_entropy = tf.losses.softmax_cross_entropy(self.pred+FLAGS.opt_epsilon, self.label)
+        self.loss = cross_entropy
 
     def load_pretrain_model(self, sess, path, father_scope):
         '''
