@@ -9,7 +9,7 @@ DATASET_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501
 LOG_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/log
 # Wher the tfrecord file is save to
 OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_train
-python train_inceptionV3_single.py \
+python train_inception_single.py \
 --learning_rate=2e-4 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
@@ -29,7 +29,7 @@ python train_inceptionV3_single.py \
 --weight_decay=0.00004 \
 --scale_size=299
 
-python train_inceptionV3_single.py \
+python train_inception_single.py \
 --learning_rate=5e-5 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
@@ -49,7 +49,7 @@ python train_inceptionV3_single.py \
 --weight_decay=0.00004 \
 --scale_size=299
 
-python train_inceptionV3_single.py \
+python train_inception_single.py \
 --learning_rate=1e-5 \
 --learning_rate_decay_type=fixed \
 --dataset_name=Market_1501 \
