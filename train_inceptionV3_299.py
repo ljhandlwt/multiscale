@@ -355,7 +355,8 @@ class Trainer(object):
         self.optimizer = optimizer
 
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-        grad = tf.gradients(self.network.loss, variables)
+        # grad = tf.gradients(self.network.loss, variables)
+        grad = tf.gradients(tf.losses.get_total_loss(), variables)
         bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         self.train_op = [self.optimizer.apply_gradients(zip(grad,variables))] + bn_op
 
