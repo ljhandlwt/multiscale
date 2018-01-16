@@ -173,7 +173,7 @@ def main():
     	args.cam_gallery_path,
     	args.cam_probe_path
     	)
-    ans = cmc(DIST, PL, GL, PCAM, GCAM, separate_camera_set=True)
+    ans = cmc(DIST, PL, GL, PCAM, GCAM, first_match_break=True)
     # ans = cmc(DIST, separate_camera_set=True)
     print(ans)
 

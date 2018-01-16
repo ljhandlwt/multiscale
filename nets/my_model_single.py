@@ -79,23 +79,26 @@ class MyInception(BaseModel):
             self.feature = self.sub_models[0].end_points['AvgPool_1a']
 
     def init_loss(self):
-        cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
+        # cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
+        for model in self.sub_models:
+            cross_entropy = tf.losses.softmax_cross_entropy(self.joint_pred+FLAGS.opt_epsilon, self.label)
+            _ = tf.losses.add_loss(cross_entropy)
 
-        if len(self.sizes) > 1:
-            joint_cross_entropy = -tf.reduce_sum(self.label*tf.log(self.joint_pred+FLAGS.opt_epsilon), axis=1)
-            joint_cross_entropy = tf.reduce_mean(joint_cross_entropy)
-            cross_entropy = cross_entropy + joint_cross_entropy
+        # if len(self.sizes) > 1:
+        #     joint_cross_entropy = -tf.reduce_sum(self.label*tf.log(self.joint_pred+FLAGS.opt_epsilon), axis=1)
+        #     joint_cross_entropy = tf.reduce_mean(joint_cross_entropy)
+        #     cross_entropy = cross_entropy + joint_cross_entropy
 
-            tf.summary.scalar('losses/%s_joint' % self.scope, joint_cross_entropy)
+        #     tf.summary.scalar('losses/%s_joint' % self.scope, joint_cross_entropy)
 
-        regular_vars = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
-        regularizers = tf.add_n(regular_vars)
+        # regular_vars = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
+        # regularizers = tf.add_n(regular_vars)
 
-        self.loss = cross_entropy + FLAGS.weight_decay * regularizers
+        # self.loss = cross_entropy + FLAGS.weight_decay * regularizers
 
-        tf.summary.scalar('losses/%s_cross_entropy' % self.scope, cross_entropy)
-        tf.summary.scalar('losses/%s_regularizers' % self.scope, regularizers)
-        tf.summary.scalar('losses/%s' % self.scope, self.loss)
+        # tf.summary.scalar('losses/%s_cross_entropy' % self.scope, cross_entropy)
+        # tf.summary.scalar('losses/%s_regularizers' % self.scope, regularizers)
+        # tf.summary.scalar('losses/%s' % self.scope, self.loss)
 
     def load_pretrain_model(self, sess, path):
         # make sure self.scope is the root scope
