@@ -12,9 +12,6 @@ from deployment import model_deploy
 
 from nets import my_model_single as my_model
 
-# jh-future:it needs to be add to tf.app.flags
-os.environ["CUDA_VISIBLE_DEVICES"]="6"
-
 slim = tf.contrib.slim
 
 tf.app.flags.DEFINE_integer(
@@ -157,6 +154,8 @@ tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
 tf.app.flags.DEFINE_integer('scale_size', 299, 'size of scale in single model')
 
+tf.app.flags.DEFINE_string('GPU_use', 0, 'number of GPU to use')
+
 #####################
 # Dir Flags #
 #####################
@@ -174,6 +173,8 @@ tf.app.flags.DEFINE_string(
 
 FLAGS = tf.app.flags.FLAGS
 
+# jh-future:it needs to be add to tf.app.flags
+os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.GPU_use
 
 def _configure_learning_rate(num_samples_per_epoch, global_step):
   """Configures the learning rate.

@@ -27,7 +27,8 @@ python train_inception_single.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---scale_size=225
+--scale_size=225 \
+--GPU_use=7
 
 python train_inception_single.py \
 --learning_rate=5e-5 \
@@ -47,7 +48,8 @@ python train_inception_single.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---scale_size=225
+--scale_size=225 \
+--GPU_use=7
 
 python train_inception_single.py \
 --learning_rate=1e-5 \
@@ -67,4 +69,5 @@ python train_inception_single.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---scale_size=225
+--scale_size=225 \
+--GPU_use=7
