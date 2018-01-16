@@ -25,40 +25,40 @@ python get_probe_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=35884
+--ckpt_num=58626
 
-python get_probe_features_single.py \
---learning_rate=2e-3 \
---learning_rate_decay_type=fixed \
---dataset_name=Market_1501 \
---dataset_split_name=train \
---dataset_dir=${OUTPUT_DIR} \
---model_name=inception_v3 \
---batch_size=8 \
---max_number_of_steps=10001 \
---checkpoint_dir=${TRAIN_DIR} \
---pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
---log_dir=${LOG_DIR} \
---save_model_summary_secs=6 \
---log_every_n_steps=5 \
---optimizer=sgd \
---weight_decay=0.00004 \
---ckpt_num=38293
+# python get_probe_features_single.py \
+# --learning_rate=2e-3 \
+# --learning_rate_decay_type=fixed \
+# --dataset_name=Market_1501 \
+# --dataset_split_name=train \
+# --dataset_dir=${OUTPUT_DIR} \
+# --model_name=inception_v3 \
+# --batch_size=8 \
+# --max_number_of_steps=10001 \
+# --checkpoint_dir=${TRAIN_DIR} \
+# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
+# --log_dir=${LOG_DIR} \
+# --save_model_summary_secs=6 \
+# --log_every_n_steps=5 \
+# --optimizer=sgd \
+# --weight_decay=0.00004 \
+# --ckpt_num=38293
 
-python get_probe_features_single.py \
---learning_rate=2e-3 \
---learning_rate_decay_type=fixed \
---dataset_name=Market_1501 \
---dataset_split_name=train \
---dataset_dir=${OUTPUT_DIR} \
---model_name=inception_v3 \
---batch_size=8 \
---max_number_of_steps=10001 \
---checkpoint_dir=${TRAIN_DIR} \
---pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
---log_dir=${LOG_DIR} \
---save_model_summary_secs=6 \
---log_every_n_steps=5 \
---optimizer=sgd \
---weight_decay=0.00004 \
---ckpt_num=50736
+# python get_probe_features_single.py \
+# --learning_rate=2e-3 \
+# --learning_rate_decay_type=fixed \
+# --dataset_name=Market_1501 \
+# --dataset_split_name=train \
+# --dataset_dir=${OUTPUT_DIR} \
+# --model_name=inception_v3 \
+# --batch_size=8 \
+# --max_number_of_steps=10001 \
+# --checkpoint_dir=${TRAIN_DIR} \
+# --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
+# --log_dir=${LOG_DIR} \
+# --save_model_summary_secs=6 \
+# --log_every_n_steps=5 \
+# --optimizer=sgd \
+# --weight_decay=0.00004 \
+# --ckpt_num=50736
