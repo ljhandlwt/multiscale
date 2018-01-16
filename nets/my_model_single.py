@@ -148,7 +148,7 @@ class SubIncption(BaseModel):
 
         # tf.summary.scalar('losses/%s' % self.scope, self.loss)
         cross_entropy = tf.losses.softmax_cross_entropy(self.pred+FLAGS.opt_epsilon, self.label)
-        self.loss = cross_entropy
+        self.loss = self.loss = tf.reduce_mean(cross_entropy)
 
     def load_pretrain_model(self, sess, path, father_scope):
         '''
