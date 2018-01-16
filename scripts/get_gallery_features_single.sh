@@ -43,7 +43,7 @@ python get_gallery_features_single.py \
 --log_every_n_steps=5 \
 --optimizer=sgd \
 --weight_decay=0.00004 \
---ckpt_num=43577
+--ckpt_num=38293
 
 python get_gallery_features_single.py \
 --learning_rate=2e-3 \
