@@ -54,8 +54,10 @@ class MyInception(BaseModel):
             with tf.variable_scope(joint_scope):
                 self.feature = tf.concat([self.sub_models[0].end_points['AvgPool_1a'],
                     self.sub_models[1].end_points['AvgPool_1a']], axis=-1)
-                x = tf.concat([model.logits for model in self.sub_models], axis=-1)
-                x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
+                x = slim.dropout(self.feature, keep_prob=0.5, scope='Dropout_joint')
+                # x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
+                x = slim.conv2d(x, self.num_classes, [1, 1], activation_fn=None,
+                             normalizer_fn=None, scope='Conv2d_joint_1x1')
                 self.joint_logits = x
                 self.joint_pred = tf.nn.softmax(x)
 
