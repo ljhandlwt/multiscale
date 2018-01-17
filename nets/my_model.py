@@ -96,9 +96,9 @@ class MyInception(BaseModel):
 
         self.loss = cross_entropy + FLAGS.weight_decay * regularizers
         cross_entropy_branch_0 = -tf.reduce_sum(self.joint_pred*tf.log(self.sub_models[0].pred+FLAGS.opt_epsilon), axis=1)
-        self.loss_branch_0 = tf.reduce_mean(cross_entropy)
+        self.loss_branch_0 = tf.reduce_mean(cross_entropy_branch_0)
         cross_entropy_branch_1 = -tf.reduce_sum(self.joint_pred*tf.log(self.sub_models[1].pred+FLAGS.opt_epsilon), axis=1)
-        self.loss_branch_1 = tf.reduce_mean(cross_entropy)
+        self.loss_branch_1 = tf.reduce_mean(cross_entropy_branch_1)
 
         tf.summary.scalar('losses/%s_cross_entropy' % self.scope, cross_entropy)
         tf.summary.scalar('losses/%s_regularizers' % self.scope, regularizers)
