@@ -34,5 +34,17 @@ for i in range(probe1_labels.shape[1]):
 			new_features = np.hstack([probe1_features[i], probe2_features[j]])
 			probe_features_new[i] = new_features
 
+gallery_features_new = np.zeros((gallery1_labels.shape[1], 4096), dtype='float32')
+
+for i in range(gallery1_labels.shape[1]):
+	for j in range(gallery2_labels.shape[1]):
+		if (gallery1_labels[0][i] == gallery2_labels[0][j]):
+			new_features = np.hstack([gallery1_features[i], gallery2_features[j]])
+			gallery_features_new[i] = new_features
+
+io.savemat('/concat_probe_features.mat', {'concat_probe_features': probe_features_new})
+io.savemat('/concat_gallery_features.mat', {'concat_gallery_features': gallery_features_new})
+io.savemat('/concat_probe_labels.mat', {'concat_probe_labels': probe1_labels})
+io.savemat('/concat_gallery_labels.mat', {'concat_gallery_labels': gallery1_labels})
 
 pdb.set_trace()
