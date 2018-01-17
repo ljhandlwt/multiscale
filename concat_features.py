@@ -26,7 +26,7 @@ probe2_features = probe2_features['test_probe_features']
 probe1_labels = probe1_labels['test_probe_labels']
 probe2_labels = probe2_labels['test_probe_labels']
 
-probe_features_new = np.zeros((probe1_labels.shape[1], 4096), dtype = int32)
+probe_features_new = np.zeros((probe1_labels.shape[1], 4096), dtype='int32')
 
 for i in range(probe1_labels.shape[1]):
 	for j in range(probe2_labels.shape[1]):
