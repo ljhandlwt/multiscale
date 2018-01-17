@@ -6,7 +6,7 @@ import re
 import numpy as np
 from scipy import io
 
-299_probe_features_path = './59286/test_probe_features.mat'
+_probe_features_path = './59286/test_probe_features.mat'
 299_gallery_features_path = './59286/test_gallery_features.mat'
 225_probe_features_path = './58626/test_probe_features.mat'
 225_gallery_features_path = './58626/test_gallery_features.mat'
