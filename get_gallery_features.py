@@ -438,9 +438,9 @@ class Trainer(object):
 
         # np.save('test_probe_features.npy', img_features)
 
-        io.savemat('test_gallery_features.mat', {'test_gallery_features': img_features})
-        io.savemat('test_gallery_labels.mat', {'test_gallery_labels': img_label})
-        io.savemat('testCAM.mat', {'testCAM': img_cam})
+        io.savemat(file_path + '/test_gallery_features.mat', {'test_gallery_features': img_features})
+        io.savemat(file_path + '/test_gallery_labels.mat', {'test_gallery_labels': img_label})
+        io.savemat(file_path + '/testCAM.mat', {'testCAM': img_cam})
 
         # io.savemat('test_probe_features.mat', {'test_probe_features': img_features})
         # io.savemat('test_probe_labels.mat', {'test_probe_labels': img_label})

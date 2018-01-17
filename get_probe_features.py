@@ -442,9 +442,9 @@ class Trainer(object):
         # io.savemat('test_gallery_labels.mat', {'test_gallery_labels': img_label})
         # io.savemat('testCAM.mat', {'testCAM': img_cam})
 
-        io.savemat('test_probe_features.mat', {'test_probe_features': img_features})
-        io.savemat('test_probe_labels.mat', {'test_probe_labels': img_label})
-        io.savemat('queryCAM.mat', {'queryCAM': img_cam})
+        io.savemat(file_path + '/test_probe_features.mat', {'test_probe_features': img_features})
+        io.savemat(file_path + '/test_probe_labels.mat', {'test_probe_labels': img_label})
+        io.savemat(file_path + '/queryCAM.mat', {'queryCAM': img_cam})
 
 
         # end
