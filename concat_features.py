@@ -6,20 +6,20 @@ import re
 import numpy as np
 from scipy import io
 
-_probe_features_path = './59286/test_probe_features.mat'
-299_gallery_features_path = './59286/test_gallery_features.mat'
-225_probe_features_path = './58626/test_probe_features.mat'
-225_gallery_features_path = './58626/test_gallery_features.mat'
+probe_features_path_299 = './59286/test_probe_features.mat'
+gallery_features_path_299 = './59286/test_gallery_features.mat'
+probe_features_path_225 = './58626/test_probe_features.mat'
+gallery_features_path_225 = './58626/test_gallery_features.mat'
 
-299_probe_labels_path = './59286/test_probe_labels.mat'
-299_gallery_labels_path = './59286/test_gallery_labels.mat'
-225_probe_labels_path = './58626/test_probe_labels.mat'
-225_gallery_labels_path = './58626/test_gallery_labels.mat'
+probe_labels_path_299 = './59286/test_probe_labels.mat'
+gallery_labels_path_299 = './59286/test_gallery_labels.mat'
+probe_labels_path_225 = './58626/test_probe_labels.mat'
+gallery_labels_path_225 = './58626/test_gallery_labels.mat'
 
-probe1_features = io.loadmat(299_probe_features_path)
-probe2_features = io.loadmat(225_probe_features_path)
-probe1_labels = io.loadmat(299_probe_labels_path)
-probe2_labels = io.loadmat(225_probe_labels_path)
+probe1_features = io.loadmat(probe_features_path_299)
+probe2_features = io.loadmat(probe_features_path_225)
+probe1_labels = io.loadmat(probe_labels_path_299)
+probe2_labels = io.loadmat(probe_labels_path_225)
 
 probe1_features = probe1_features['test_probe_features']
 probe2_features = probe2_features['test_probe_features']
