@@ -56,7 +56,7 @@ class MyInception(BaseModel):
                     self.sub_models[1].end_points['AvgPool_1a']], axis=-1)
                 x = slim.dropout(self.feature, keep_prob=0.5, scope='Dropout_joint')
                 # x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
-                x = slim.conv2d(x, self.num_classes, [1, 1], activation_fn=None,
+                x = slim.conv2d(x, 1, [1, 1], activation_fn=None,
                              normalizer_fn=None, scope='Conv2d_joint_1x1')
                 self.joint_logits = x
                 self.joint_pred = tf.nn.softmax(x)
