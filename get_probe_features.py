@@ -159,6 +159,9 @@ tf.app.flags.DEFINE_integer('origin_channel', 3, 'origin channel of image')
 
 tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
+tf.app.flags.DEFINE_integer(
+    'ckpt_num', None, 'The number of ckpt model.')
+
 #####################
 # Dir Flags #
 #####################
@@ -277,7 +280,7 @@ class Trainer(object):
         with tf.Graph().as_default():
             self.init_batch()
             self.init_network()
-            self.init_opt()
+            # self.init_opt()
 
             self.train()
 
@@ -453,9 +456,9 @@ class Trainer(object):
             filenames = os.listdir(FLAGS.checkpoint_dir)
             filenames = [name for name in filenames if name.endswith('index')]
             if len(filenames) > 0:
-                pattern = r'model\.ckpt\-(\d+)\.index'
-                nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
-                max_num = max(nums)
+                # pattern = r'model\.ckpt\-(\d+)\.index'
+                # nums = [int(re.search(pattern, name).groups()[0]) for name in filenames]
+                max_num = FLAGS.ckpt_num
 
                 self.saver.restore(self.sess, os.path.join(FLAGS.checkpoint_dir, 'model.ckpt-{}'.format(max_num)))
                 print("[JH]use checkpoint-{} weights".format(max_num))
