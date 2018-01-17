@@ -26,5 +26,13 @@ probe2_features = probe2_features['test_probe_features']
 probe1_labels = probe1_labels['test_probe_labels']
 probe2_labels = probe2_labels['test_probe_labels']
 
-pdb.set_trace()
+probe_features_new = np.zeros((probe1_labels.shape[1], 4096), dtype = int32)
 
+for i in range(probe1_labels.shape[1]):
+	for j in range(probe2_labels.shape[1]):
+		if (probe1_labels[0][i] == probe2_labels[0][j]):
+			new_features = np.hstack([probe1_features[i], probe2_features[j]])
+			probe_features_new[i] = new_features
+
+
+pdb.set_trace()
