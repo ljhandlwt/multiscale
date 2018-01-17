@@ -173,9 +173,9 @@ class SubIncption(BaseModel):
 
         d = {}
         for var in variables:
-            name = var.name.replace(scope, '').replace(':0', '')
-            if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
-                continue
+            name = var.name.replace(self.scope, 'branch_0').replace(':0', '')
+            # if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
+            #     continue
             d[name] = var
 
         saver = tf.train.Saver(d)
