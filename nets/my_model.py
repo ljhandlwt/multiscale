@@ -106,7 +106,7 @@ class MyInception(BaseModel):
 
     def load_pretrain_model(self, sess, path):
         # make sure self.scope is the root scope
-        for i in len(self.sub_models):
+        for i in range(len(self.sub_models)):
             self.sub_models[i].load_pretrain_model(sess, path[i], self.scope)
 
 class SubIncption(BaseModel):
