@@ -26,6 +26,16 @@ probe2_features = probe2_features['test_probe_features']
 probe1_labels = probe1_labels['test_probe_labels']
 probe2_labels = probe2_labels['test_probe_labels']
 
+gallery1_features = io.loadmat(gallery_features_path_299)
+gallery2_features = io.loadmat(gallery_features_path_225)
+gallery1_labels = io.loadmat(gallery_labels_path_299)
+gallery2_labels = io.loadmat(gallery_labels_path_225)
+
+gallery1_features = gallery1_features['test_gallery_features']
+gallery2_features = gallery2_features['test_gallery_features']
+gallery1_labels = gallery1_labels['test_gallery_labels']
+gallery2_labels = gallery2_labels['test_gallery_labels']
+
 probe_features_new = np.zeros((probe1_labels.shape[1], 4096), dtype='float32')
 
 for i in range(probe1_labels.shape[1]):
