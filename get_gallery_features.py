@@ -429,6 +429,10 @@ class Trainer(object):
         print (img_features.shape)
         print (img_label.shape)
         print (img_cam.shape)
+
+        file_path = str(FLAGS.ckpt_num)
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
         # img_features = np.resize(img_features, [gallery_img_num, 4096])
         # print (img_features.shape)
 
