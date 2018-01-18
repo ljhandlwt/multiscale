@@ -117,7 +117,8 @@ class SubIncption(BaseModel):
 
     def init_network(self):
         x = self.image
-        x = tf.image.resize_images(x, [self.size,self.size], 0) #0 mean bilinear
+        # x = tf.image.resize_images(x, [self.size,self.size], 0) #0 mean bilinear
+        x = tf.image.resize_images(x, [256, 128], 0)
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
