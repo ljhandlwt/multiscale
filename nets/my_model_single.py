@@ -46,7 +46,7 @@ class MyInception(BaseModel):
         #     self.sub_models.append(sub_model)
 
         sub_model = SubIncption([self.image,self.label],
-                self.num_classes, self.height, self.width, 'branch_{}'.format(i), is_training=self.is_training)
+                self.num_classes, self.height, self.width, 'branch_0', is_training=self.is_training)
         self.sub_models.append(sub_model)
 
         # if len(self.sizes) > 1:
