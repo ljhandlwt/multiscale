@@ -13,9 +13,6 @@ from deployment import model_deploy
 
 from nets import my_model
 
-# jh-future:it needs to be add to tf.app.flags
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
-
 slim = tf.contrib.slim
 
 tf.app.flags.DEFINE_integer(
@@ -156,6 +153,8 @@ tf.app.flags.DEFINE_integer('origin_channel', 3, 'origin channel of image')
 
 tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
+tf.app.flags.DEFINE_string('GPU_use', '0', 'number of GPU to use')
+
 #####################
 # Dir Flags #
 #####################
@@ -179,6 +178,7 @@ tf.app.flags.DEFINE_string(
 
 FLAGS = tf.app.flags.FLAGS
 
+os.environ["CUDA_VISIBLE_DEVICES"]=FLAGS.GPU_use
 
 def _configure_learning_rate(num_samples_per_epoch, global_step):
   """Configures the learning rate.
@@ -354,7 +354,7 @@ class Trainer(object):
 
     def init_opt(self):
         with tf.device(self.deploy_config.optimizer_device()):
-            learning_rate = _configure_learning_rate(5000, self.global_step) #5000 is a discarded para
+            learning_rate = _configure_learning_rate(12000, self.global_step) #5000 is a discarded para
             optimizer = _configure_optimizer(learning_rate)
             tf.summary.scalar('learning_rate', learning_rate)
 
