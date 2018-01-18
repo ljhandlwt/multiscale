@@ -27,4 +27,45 @@ python get_gallery_features.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---ckpt_num=23278 \
+--ckpt_num=36110 \
+
+
+python get_gallery_features.py \
+--learning_rate=2e-3 \
+--learning_rate_decay_type=fixed \
+--dataset_name=Market_1501 \
+--dataset_split_name=train \
+--dataset_dir=${OUTPUT_DIR} \
+--model_name=inception_v3 \
+--batch_size=8 \
+--max_number_of_steps=10001 \
+--checkpoint_dir=${TRAIN_DIR} \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
+--log_dir=${LOG_DIR} \
+--save_model_summary_secs=6 \
+--log_every_n_steps=5 \
+--optimizer=adam \
+--adam_beta1=0.5 \
+--adam_beta2=0.999 \
+--weight_decay=0.00004 \
+--ckpt_num=55612 \
+
+python get_gallery_features.py \
+--learning_rate=2e-3 \
+--learning_rate_decay_type=fixed \
+--dataset_name=Market_1501 \
+--dataset_split_name=train \
+--dataset_dir=${OUTPUT_DIR} \
+--model_name=inception_v3 \
+--batch_size=8 \
+--max_number_of_steps=10001 \
+--checkpoint_dir=${TRAIN_DIR} \
+--pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
+--log_dir=${LOG_DIR} \
+--save_model_summary_secs=6 \
+--log_every_n_steps=5 \
+--optimizer=adam \
+--adam_beta1=0.5 \
+--adam_beta2=0.999 \
+--weight_decay=0.00004 \
+--ckpt_num=58969 \
