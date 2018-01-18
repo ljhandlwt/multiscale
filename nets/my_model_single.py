@@ -23,7 +23,8 @@ class BaseModel(object):
 class MyInception(BaseModel):
     def __init__(self, num_classes, sizes, scope, is_training=True):
         self.num_classes = num_classes
-        self.sizes = sizes
+        self.height = sizes[0]
+        self.width = sizes[1]
         self.scope = scope
         self.is_training = is_training
 
@@ -39,44 +40,52 @@ class MyInception(BaseModel):
 
     def init_network(self):
         self.sub_models = []
-        for i,s in enumerate(self.sizes):
-            sub_model = SubIncption([self.image,self.label],
-                self.num_classes, s, 'branch_{}'.format(i), is_training=self.is_training)
-            self.sub_models.append(sub_model)
+        # for i,s in enumerate(self.sizes):
+        #     sub_model = SubIncption([self.image,self.label],
+        #         self.num_classes, s, 'branch_{}'.format(i), is_training=self.is_training)
+        #     self.sub_models.append(sub_model)
 
-        if len(self.sizes) > 1:
-            joint_scope = 'joint'
+        sub_model = SubIncption([self.image,self.label],
+                self.num_classes, self.height, self.width, 'branch_{}'.format(i), is_training=self.is_training)
+        self.sub_models.append(sub_model)
 
-            with tf.variable_scope(joint_scope):
-                self.feature = tf.concat([self.sub_models[0].end_points['AvgPool_1a'],
-                    self.sub_models[1].end_points['AvgPool_1a']], axis=-1)
-                x = tf.concat([model.logits for model in self.sub_models], axis=-1)
-                x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
-                self.joint_logits = x
-                self.joint_pred = tf.nn.softmax(x)
+        # if len(self.sizes) > 1:
+        #     joint_scope = 'joint'
 
-                corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.joint_logits,1))
-                self.joint_acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
+        #     with tf.variable_scope(joint_scope):
+        #         self.feature = tf.concat([self.sub_models[0].end_points['AvgPool_1a'],
+        #             self.sub_models[1].end_points['AvgPool_1a']], axis=-1)
+        #         x = tf.concat([model.logits for model in self.sub_models], axis=-1)
+        #         x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
+        #         self.joint_logits = x
+        #         self.joint_pred = tf.nn.softmax(x)
 
-                self.logits = self.joint_logits
-                self.end_points = {}
-                for model in self.sub_models:
-                    for end_point in model.end_points:
-                        self.end_points[model.scope+'/'+end_point] = model.end_points[end_point]
-                self.end_points[joint_scope+'/Logits'] = self.joint_logits
-                self.end_points[joint_scope+'/Predictions'] = self.joint_pred
+        #         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.joint_logits,1))
+        #         self.joint_acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
+
+        #         self.logits = self.joint_logits
+        #         self.end_points = {}
+        #         for model in self.sub_models:
+        #             for end_point in model.end_points:
+        #                 self.end_points[model.scope+'/'+end_point] = model.end_points[end_point]
+        #         self.end_points[joint_scope+'/Logits'] = self.joint_logits
+        #         self.end_points[joint_scope+'/Predictions'] = self.joint_pred
 
 
-            tf.summary.histogram('activations/%s/%s'%(self.scope,'Logits'), self.joint_logits)
-            tf.summary.scalar('sparsity/%s/%s'%(self.scope,'Logits'), tf.nn.zero_fraction(self.joint_logits))
-            tf.summary.histogram('activations/%s/%s'%(self.scope,'Predictions'), self.joint_pred)
-            tf.summary.scalar('sparsity/%s/%s'%(self.scope,'Predictions'), tf.nn.zero_fraction(self.joint_pred))
+        #     tf.summary.histogram('activations/%s/%s'%(self.scope,'Logits'), self.joint_logits)
+        #     tf.summary.scalar('sparsity/%s/%s'%(self.scope,'Logits'), tf.nn.zero_fraction(self.joint_logits))
+        #     tf.summary.histogram('activations/%s/%s'%(self.scope,'Predictions'), self.joint_pred)
+        #     tf.summary.scalar('sparsity/%s/%s'%(self.scope,'Predictions'), tf.nn.zero_fraction(self.joint_pred))
 
-            tf.summary.scalar('acc/%s' % self.scope, self.joint_acc)
-        else:
-            self.logits = self.sub_models[0].logits
-            self.end_points = self.sub_models[0].end_points
-            self.feature = self.sub_models[0].end_points['AvgPool_1a']
+        #     tf.summary.scalar('acc/%s' % self.scope, self.joint_acc)
+        # else:
+        #     self.logits = self.sub_models[0].logits
+        #     self.end_points = self.sub_models[0].end_points
+        #     self.feature = self.sub_models[0].end_points['AvgPool_1a']
+
+        self.logits = self.sub_models[0].logits
+        self.end_points = self.sub_models[0].end_points
+        self.feature = self.sub_models[0].end_points['AvgPool_1a']
 
     def init_loss(self):
         cross_entropy = tf.reduce_sum([model.loss for model in self.sub_models])
@@ -103,11 +112,12 @@ class MyInception(BaseModel):
             model.load_pretrain_model(sess, path, self.scope)
 
 class SubIncption(BaseModel):
-    def __init__(self, input, num_classes, size, scope, is_training=True):
+    def __init__(self, input, num_classes, height, width, scope, is_training=True):
         self.image = input[0]
         self.label = input[1]
         self.num_classes = num_classes
-        self.size = size
+        self.height = height
+        self.width = width
         self.scope = scope
         self.is_training = is_training
 
@@ -118,7 +128,7 @@ class SubIncption(BaseModel):
     def init_network(self):
         x = self.image
         # x = tf.image.resize_images(x, [self.size,self.size], 0) #0 mean bilinear
-        x = tf.image.resize_images(x, [256, 128], 0)
+        x = tf.image.resize_images(x, [self.height, self.width], 0)
         x = tf.subtract(x, 0.5)
         x = tf.multiply(x, 2.0)
 
