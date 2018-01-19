@@ -27,7 +27,7 @@ python get_probe_features_single.py \
 --weight_decay=0.00004 \
 --scale_height=320 \
 --scale_width=160 \
---ckpt_num=58626
+--ckpt_num=34160
 
 python get_probe_features_single.py \
 --learning_rate=2e-3 \
@@ -47,7 +47,7 @@ python get_probe_features_single.py \
 --weight_decay=0.00004 \
 --scale_height=320 \
 --scale_width=160 \
---ckpt_num=58626
+--ckpt_num=58228
 
 python get_probe_features_single.py \
 --learning_rate=2e-3 \
@@ -67,4 +67,4 @@ python get_probe_features_single.py \
 --weight_decay=0.00004 \
 --scale_height=320 \
 --scale_width=160 \
---ckpt_num=58626
+--ckpt_num=59876
