@@ -27,7 +27,7 @@ python get_gallery_features.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---ckpt_num=86291 \
+--ckpt_num=96493 \
 
 
 python get_gallery_features.py \
@@ -48,7 +48,7 @@ python get_gallery_features.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---ckpt_num=88344 \
+--ckpt_num=98518 \
 
 python get_gallery_features.py \
 --learning_rate=2e-3 \
@@ -68,4 +68,4 @@ python get_gallery_features.py \
 --adam_beta1=0.5 \
 --adam_beta2=0.999 \
 --weight_decay=0.00004 \
---ckpt_num=89711 \
+--ckpt_num=99869 \
