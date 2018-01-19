@@ -61,7 +61,7 @@ python train_inception_single.py \
 --dataset_dir=${OUTPUT_DIR} \
 --model_name=inception_v3 \
 --batch_size=8 \
---max_number_of_steps=60000 \
+--max_number_of_steps=100000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
 --log_dir=${LOG_DIR} \
