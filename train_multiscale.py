@@ -153,6 +153,14 @@ tf.app.flags.DEFINE_integer('origin_channel', 3, 'origin channel of image')
 
 tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
+tf.app.flags.DEFINE_integer('branch_0_height', 256, 'size of scale in single model')
+
+tf.app.flags.DEFINE_integer('branch_0_width', 128, 'size of scale in single model')
+
+tf.app.flags.DEFINE_integer('branch_1_height', 320, 'size of scale in single model')
+
+tf.app.flags.DEFINE_integer('branch_1_width', 160, 'size of scale in single model')
+
 tf.app.flags.DEFINE_string('GPU_use', '0', 'number of GPU to use')
 
 #####################
@@ -345,7 +353,8 @@ class Trainer(object):
         # jh-future:sizes can be add into tf.app.flags
         network = my_model.MyInception(
             FLAGS.num_classes-FLAGS.labels_offset,
-            [299,225],
+            [[FLAGS.branch_1_height, FLAGS.branch_0_width], 
+            [FLAGS.branch_1_height, FLAGS.branch_1_width]],
             FLAGS.model_name,
             is_training=True
         )
@@ -433,18 +442,19 @@ class Trainer(object):
                 self.network.label:batch[1]
             }
             # calc_obj
-            calc_obj = [self.train_op, self.network.loss, self.network.joint_acc, 
+            calc_obj = [self.train_op + self.train_op_branch_0 + self.train_op_branch_1, 
+                self.network.loss, self.network.joint_acc, 
             	self.network.sub_models[0].loss, self.network.sub_models[1].loss, 
             	self.network.sub_models[0].acc, self.network.sub_models[1].acc]
             if timeout:
                 calc_obj.append(self.summary_op)
-            calc_obj_branch_0 = [self.train_op_branch_0]
-            calc_obj_branch_1 = [self.train_op_branch_1]
+            # calc_obj_branch_0 = [self.train_op_branch_0]
+            # calc_obj_branch_1 = [self.train_op_branch_1]
 
             # run
             calc_ans = self.sess.run(calc_obj, feed_dict=feed)
-            self.sess.run(calc_obj_branch_0, feed_dict=feed)
-            self.sess.run(calc_obj_branch_1, feed_dict=feed)
+            # self.sess.run(calc_obj_branch_0, feed_dict=feed)
+            # self.sess.run(calc_obj_branch_1, feed_dict=feed)
 
             # loss-acc
             sum_joint_loss.append(calc_ans[1])
