@@ -353,7 +353,7 @@ class Trainer(object):
         # jh-future:sizes can be add into tf.app.flags
         network = my_model.MyInception(
             FLAGS.num_classes-FLAGS.labels_offset,
-            [[FLAGS.branch_1_height, FLAGS.branch_0_width], 
+            [[FLAGS.branch_0_height, FLAGS.branch_0_width], 
             [FLAGS.branch_1_height, FLAGS.branch_1_width]],
             FLAGS.model_name,
             is_training=True
