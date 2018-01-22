@@ -209,10 +209,6 @@ class Get_feature(object):
     def init_gallery_batch(self):
         deploy_config = model_deploy.DeploymentConfig()
 
-        with tf.device(deploy_config.variables_device()):
-            global_step = slim.create_global_step()
-            self.global_step = global_step
-
         gallery_tfrecord_list = os.listdir(FLAGS.gallery_dataset_dir)
         gallery_tfrecord_list = [os.path.join(FLAGS.gallery_dataset_dir, name) for name in gallery_tfrecord_list if name.endswith('tfrecords')]
         gallery_file_queue = tf.train.string_input_producer(gallery_tfrecord_list, num_epochs=1)
