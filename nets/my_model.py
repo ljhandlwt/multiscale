@@ -135,7 +135,6 @@ class SubIncption(BaseModel):
         self.pred = end_points['Predictions']
         self.feature = end_points['AvgPool_1a']
         self.end_points = end_points
-        self.feature = end_points['AvgPool_1a']
 
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.logits,1))
         self.acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
