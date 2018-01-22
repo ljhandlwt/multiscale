@@ -16,7 +16,7 @@ from deployment import model_deploy
 from nets import my_model_single as my_model
 
 # jh-future:it needs to be add to tf.app.flags
-os.environ["CUDA_VISIBLE_DEVICES"]="3"
+os.environ["CUDA_VISIBLE_DEVICES"]="2"
 
 slim = tf.contrib.slim
 
