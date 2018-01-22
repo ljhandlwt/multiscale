@@ -25,4 +25,4 @@ python get_features_multi.py \
 --weight_decay=0.00004 \
 --ckpt_num=59649 \
 --scale_size1=299 \
---scale_size1=225
+--scale_size2=225

@@ -140,7 +140,6 @@ class SubIncption(BaseModel):
         self.pred = end_points['Predictions']
         self.feature = end_points['AvgPool_1a']
         self.end_points = end_points
-        self.feature = end_points['AvgPool_1a']
 
         corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.logits,1))
         self.acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
@@ -177,8 +176,8 @@ class SubIncption(BaseModel):
         d = {}
         for var in variables:
             name = var.name.replace(self.scope, 'branch_0').replace(':0', '')
-            if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
-                continue
+            # if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
+            #     continue
             d[name] = var
 
         saver = tf.train.Saver(d)
