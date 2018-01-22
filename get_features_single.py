@@ -243,9 +243,6 @@ class Get_feature(object):
             allow_smaller_final_batch=True
         )
 
-        self.deploy_config = deploy_config
-        self.global_step = global_step
-
         self.gallery_images = gallery_images
         self.gallery_labels = gallery_labels
         self.gallery_cams = gallery_cams
