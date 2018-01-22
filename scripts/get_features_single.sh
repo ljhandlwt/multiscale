@@ -22,5 +22,6 @@ python get_features_single.py \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
 --log_dir=${LOG_DIR} \
 --optimizer=sgd \
+--weight_decay=0.00004 \
 --ckpt_num=55646 \
 --scale_size=225

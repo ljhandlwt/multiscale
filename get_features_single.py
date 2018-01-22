@@ -31,6 +31,8 @@ tf.app.flags.DEFINE_integer(
 ######################
 # Optimization Flags #
 ######################
+tf.app.flags.DEFINE_float(
+    'weight_decay', 0.00004, 'The weight decay on the model weights.')
 
 tf.app.flags.DEFINE_string(
     'optimizer', 'rmsprop',
