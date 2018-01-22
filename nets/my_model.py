@@ -39,14 +39,10 @@ class MyInception(BaseModel):
 
     def init_network(self):
         self.sub_models = []
-        # feature = []
         for i,s in enumerate(self.sizes):
             sub_model = SubIncption([self.image,self.label],
                 self.num_classes, s, 'branch_{}'.format(i), is_training=self.is_training)
             self.sub_models.append(sub_model)
-            # feature.append(sub_model.end_points['Mixed_7c'])
-        # pdb.set_trace()
-        # self.feature = tf.concat(feature, axis=-1)
 
         if len(self.sizes) > 1:
             joint_scope = 'joint'
@@ -55,7 +51,6 @@ class MyInception(BaseModel):
                 self.feature = tf.concat([self.sub_models[0].end_points['AvgPool_1a'],
                     self.sub_models[1].end_points['AvgPool_1a']], axis=-1)
                 x = slim.dropout(self.feature, keep_prob=0.5, scope='Dropout_joint')
-                # x = slim.fully_connected(x, self.num_classes, normalizer_fn=None, scope='joint_fc')
                 x = slim.conv2d(x, self.num_classes, [1, 1], activation_fn=None,
                              normalizer_fn=None, scope='Conv2d_joint_1x1')
                 x = tf.squeeze(x)
@@ -175,11 +170,17 @@ class SubIncption(BaseModel):
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope)
 
         d = {}
-        for var in variables:
-            name = var.name.replace(self.scope, 'branch_0').replace(':0', '')
-            # if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
-            #     continue
-            d[name] = var
-
+        if path == None:
+            path = FLAGS.pretrain_path
+            for var in variables:
+                name = var.name.replace(scope, '').replace(':0', '')
+                if name.startswith('InceptionV3/AuxLogits') or name.startswith('InceptionV3/Logits'):
+                    continue
+                d[name] = var
+        else:
+            for var in variables:
+                name = var.name.replace(self.scope, 'branch_0').replace(':0', '')
+                d[name] = var
+    
         saver = tf.train.Saver(d)
         saver.restore(sess, path)

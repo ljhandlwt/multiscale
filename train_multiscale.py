@@ -16,14 +16,6 @@ from nets import my_model
 slim = tf.contrib.slim
 
 tf.app.flags.DEFINE_integer(
-    'num_readers', 4,
-    'The number of parallel readers that read data from the dataset.')
-
-tf.app.flags.DEFINE_integer(
-    'num_preprocessing_threads', 4,
-    'The number of threads used to create the batches.')
-
-tf.app.flags.DEFINE_integer(
     'log_every_n_steps', 10,
     'The frequency with which logs are print.')
 
@@ -118,12 +110,6 @@ tf.app.flags.DEFINE_integer(
 #######################
 
 tf.app.flags.DEFINE_string(
-    'dataset_name', 'imagenet', 'The name of the dataset to load.')
-
-tf.app.flags.DEFINE_string(
-    'dataset_split_name', 'train', 'The name of the train/test split.')
-
-tf.app.flags.DEFINE_string(
     'dataset_dir', None, 'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
@@ -134,10 +120,6 @@ tf.app.flags.DEFINE_integer(
 
 tf.app.flags.DEFINE_string(
     'model_name', 'inception_v3', 'The name of the architecture to train.')
-
-tf.app.flags.DEFINE_string(
-    'preprocessing_name', None, 'The name of the preprocessing to use. If left '
-    'as `None`, then the model_name flag is used.')
 
 tf.app.flags.DEFINE_integer(
     'batch_size', 32, 'The number of samples in each batch.')
@@ -154,6 +136,10 @@ tf.app.flags.DEFINE_integer('origin_channel', 3, 'origin channel of image')
 tf.app.flags.DEFINE_integer('num_classes', 751, 'num of classes')
 
 tf.app.flags.DEFINE_string('GPU_use', '0', 'number of GPU to use')
+
+tf.app.flags.DEFINE_integer('size_branch_0', 299, 'size of branch0')
+
+tf.app.flags.DEFINE_integer('size_branch_1', 225, 'size of branch1')
 
 #####################
 # Dir Flags #
@@ -345,7 +331,7 @@ class Trainer(object):
         # jh-future:sizes can be add into tf.app.flags
         network = my_model.MyInception(
             FLAGS.num_classes-FLAGS.labels_offset,
-            [299,225],
+            [FLAGS.size_branch_0, FLAGS.size_branch_1],
             FLAGS.model_name,
             is_training=True
         )
@@ -491,7 +477,7 @@ class Trainer(object):
                 self.saver.restore(self.sess, os.path.join(FLAGS.checkpoint_dir, 'model.ckpt-{}'.format(max_num)))
                 print("[JH]use checkpoint-{} weights".format(max_num))
                 return max_num
-        if os.path.exists(FLAGS.pretrain_path):
+        else:
             self.network.load_pretrain_model(self.sess, 
                 [FLAGS.pretrain_branch_0_path, FLAGS.pretrain_branch_1_path])
             print("[ZKC]use pretrain init weights")
