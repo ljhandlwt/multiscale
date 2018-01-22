@@ -292,7 +292,7 @@ class Get_feature(object):
         probe_img_label = []
         probe_img_cam = []
 
-        for i in range(sys.maxint):
+        for i in range(99999):
             try:
                 batch = self.sess.run([self.probe_images, self.probe_labels, self.probe_cams])
             except Exception as e:
@@ -327,7 +327,7 @@ class Get_feature(object):
         gallery_img_label = []
         gallery_img_cam = []
 
-        for i in range(sys.maxint):
+        for i in range(99999):
             try:
                 batch = self.sess.run([self.gallery_images, self.gallery_labels, self.gallery_cams])
             except Exception as e:
