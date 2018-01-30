@@ -354,7 +354,7 @@ class Get_feature(object):
 
         io.savemat(file_path + '/test_gallery_features.mat', {'test_gallery_features': gallery_img_features})
         io.savemat(file_path + '/test_gallery_labels.mat', {'test_gallery_labels': gallery_img_label})
-        io.savemat(file_path + '/testCAM.mat', {'queryCAM': gallery_img_cam})
+        io.savemat(file_path + '/testCAM.mat', {'testCAM': gallery_img_cam})
 
         # end
         self.summary_writer.close()
